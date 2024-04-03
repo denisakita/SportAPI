@@ -1,6 +1,0 @@
-@SportAPI_HostAddress = http://localhost:5223
-
-GET {{SportAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
