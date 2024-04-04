@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SportAPI.Models;
 
 namespace SportAPI.Controllers
@@ -22,18 +23,53 @@ namespace SportAPI.Controllers
         // }
 
 
+        // [HttpGet]
+        // public ActionResult GetAllProducts()
+        // {
+        //     var products = _context.Products.ToList();
+        //     return Ok(products);
+        // }
+
+        // [HttpGet]
+        // public async Task<IEnumerable<Product>> GetAllProducts()
+        // {
+        //     return await _context.Products.ToListAsync();
+        // }
+        //
         [HttpGet]
-        public ActionResult GetAllProducts()
+        public async Task<ActionResult> GetAllProducts()
         {
-            var products = _context.Products.ToList();
+            var products = await _context.Products.ToListAsync();
             return Ok(products);
         }
+        
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllProducts()
+        // {
+        //     var products = await _context.Products.ToListAsync();
+        //     return Ok(products);
+        // }
 
-
+        //
+        // [HttpGet("{id}")]
+        // public ActionResult GetProduct(int id)
+        // {
+        //     var product = _context.Products.Find(id);
+        //     if (product == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     return Ok(product);
+        // }
+        
         [HttpGet("{id}")]
-        public ActionResult GetProduct(int id)
+        public async Task<ActionResult>GetProduct(int id)
         {
-            var product = _context.Products.Find(id);
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
             return Ok(product);
         }
     }
