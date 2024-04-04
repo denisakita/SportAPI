@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SportAPI.Models;
 
 namespace SportAPI.Controllers
 {
@@ -6,10 +7,34 @@ namespace SportAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        [HttpGet]
-        public string GetProducts()
+        private readonly ShopContext _context;
+
+        public ProductsController(ShopContext context)
         {
-            return "OK";
+            _context = context;
+            _context.Database.EnsureCreated();
+        }
+
+        // [HttpGet]
+        // public IEnumerable<Product> GetAllProducts()
+        // {
+        //     return _context.Products.ToArray();
+        // }
+
+
+        [HttpGet]
+        public ActionResult GetAllProducts()
+        {
+            var products = _context.Products.ToList();
+            return Ok(products);
+        }
+
+
+        [HttpGet("{id}")]
+        public ActionResult GetProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            return Ok(product);
         }
     }
 }
